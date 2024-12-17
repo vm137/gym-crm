@@ -1,7 +1,7 @@
 package com.epam.dao;
 
 import com.epam.model.Trainee;
-import com.epam.storage.TraineeStorage;
+import com.epam.repository.TraineeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -9,13 +9,13 @@ import org.springframework.stereotype.Component;
 public class TraineeDao {
 
     @Autowired
-    private TraineeStorage traineeStorage;
+    private TraineeRepository repository;
 
     public void save(Trainee trainee) {
-        traineeStorage.addTrainee(trainee);
+        repository.save(trainee);
     }
 
     public Trainee get(int id) {
-        return traineeStorage.getTrainee(id);
+        return repository.getTraineeById(id);
     }
 }
