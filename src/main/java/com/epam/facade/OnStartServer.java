@@ -1,7 +1,8 @@
 package com.epam.facade;
 
-import com.epam.dao.TraineeDao;
-import com.epam.model.Trainee;
+import com.epam.model.onetoone.Address;
+import com.epam.model.onetoone.User;
+import com.epam.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,22 +16,24 @@ public class OnStartServer implements ApplicationListener<ApplicationReadyEvent>
     Logger logger = LoggerFactory.getLogger(OnStartServer.class);
 
     @Autowired
-    private TraineeDao traineeDao;
+    private UserRepository userRepository;
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         logger.info("CRM started...");
 
-        Trainee t1 = new Trainee();
+        // one-to-one
+        // https://www.baeldung.com/jpa-one-to-one
+        User t1 = new User();
         t1.setName("John Dow");
-        traineeDao.save(t1);
 
-        Trainee t2 = new Trainee();
-        t2.setName("Jane Dow 33");
-        traineeDao.save(t2);
+        Address a1 = new Address();
+        a1.setStreet("123 Main Street");
+        a1.setCity("New York");
+        t1.setAddress(a1);
 
-        Trainee s1 = traineeDao.get(2);
-        System.out.println(s1.toString());
+        userRepository.save(t1);
+
 
         System.out.println("---");
     }
