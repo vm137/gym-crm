@@ -12,7 +12,7 @@ import lombok.Data;
 public class Address {
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     private String street;
     private String city;
