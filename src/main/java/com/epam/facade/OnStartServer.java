@@ -1,5 +1,7 @@
 package com.epam.facade;
 
+import com.epam.model.manytomany.Employee;
+import com.epam.model.manytomany.Project;
 import com.epam.model.onetomany.Cart;
 import com.epam.model.onetomany.Item;
 import com.epam.model.onetoone.Address;
@@ -66,9 +68,24 @@ public class OnStartServer implements ApplicationListener<ApplicationReadyEvent>
         cartRepository.save(cart);
 
 
+        // many-to-many
+        String[] employeeData = { "Peter Oven", "Allan Norman" };
+        String[] projectData = { "IT Project", "Networking Project" };
+        Set<Project> projects = new HashSet<>();
 
+        for (String proj : projectData) {
+            projects.add(new Project(proj));
+        }
 
+        for (String emp : employeeData) {
+            Employee employee = new Employee(emp.split(" ")[0], emp.split(" ")[1]);
+            employee.setProjects(projects);
 
+            for (Project proj : projects) {
+                Set<Employee> employees = proj.getEmployees();
+//                employees.add(employee);
+            }
+        }
 
         System.out.println("---");
     }
